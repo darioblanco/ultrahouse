@@ -11,9 +11,11 @@ if __name__ == '__main__':
                         help="Webserver host")
     parser.add_argument("--port", type=int, default=7777,
                         help="Webserver port")
+    parser.add_argument("--db", action=str, default='ultrahouse.db',
+                        help="Set SQLite db absolutfile path")
     parser.add_argument("--debug", action="store_true", default=False,
                         help="Set debug mode")
     args_dict = vars(parser.parse_args())
 
-    app = create_app(debug=args_dict['debug'])
+    app = create_app(db_path=args_dict['db'], debug=args_dict['debug'])
     app.run(host=args_dict['host'], port=args_dict['port'])

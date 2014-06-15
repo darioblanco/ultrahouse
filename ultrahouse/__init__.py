@@ -1,9 +1,7 @@
 import flask
 
-from ultrahouse.settings import DATABASE
 
-
-def create_app(db_path=DATABASE, debug=False, testing=False):
+def create_app(db_path, debug=False, testing=False):
     """Returns a flask app object with an assigned db and api manager"""
     app = flask.Flask(__name__)
     app.config['DEBUG'] = debug
