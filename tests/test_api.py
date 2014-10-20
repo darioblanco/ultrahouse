@@ -1,10 +1,8 @@
-import json
+# -*- coding: utf-8 -*-
+# Copyright 2014, wywy GmbH
 
 
-def test_list_devices(app):
-    with app.test_client() as c:
-        resp = c.get('/api/device')
-    assert resp.status_code == 200
-    assert resp.mimetype == 'application/json'
-    assert json.loads(resp.data.decode()) == {"num_results": 0, "objects": [],
-                                              "page": 1, "total_pages": 0}
+def test_list_device(app):
+    body = app.get('/api/device/foo')
+    assert body == []
+    assert app.srmock.status == "404 Not Found"
