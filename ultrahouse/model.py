@@ -1,9 +1,28 @@
-from flask.ext.sqlalchemy import SQLAlchemy
+# -*- coding: utf-8 -*-
+# Copyright 2014, wywy GmbH
 
-db = SQLAlchemy()
+from sqlalchemy import Column, Unicode, Integer
+from sqlalchemy.ext.declarative import declarative_base
 
 
-class Device(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Unicode, unique=True)
-    mac = db.Column(db.Unicode)
+Base = declarative_base()
+
+
+class Device(Base):
+    __tablename__ = 'department'
+    id = Column(Integer, primary_key=True)
+    name = Column(Unicode, unique=True)
+    mac = Column(Unicode, unique=True)
+
+    def __repr__(self):
+        return "<Device(name={}, mac={})>".format(self.name, self.mac)
+
+
+from sqlalchemy import create_engine
+engine = create_engine('sqlite:///ultrahouse.db')
+
+
+from sqlalchemy.orm import sessionmaker
+session = sessionmaker()
+session.configure(bind=engine)
+Base.metadata.create_all(engine)
